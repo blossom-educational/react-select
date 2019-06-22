@@ -6,10 +6,6 @@
   "module": "dist/react-select.esm.js",
   "author": "Jed Watson",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/JedWatson/react-select.git"
-  },
   "dependencies": {
     "classnames": "^2.2.5",
     "emotion": "^9.1.2",
