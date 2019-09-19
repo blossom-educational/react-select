@@ -12,12 +12,14 @@
     return a === b;
   };
 
-  function index(resultFn) {
-    var isEqual = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : simpleIsEqual;
+  function index(resultFn, isEqual) {
+    if (isEqual === void 0) {
+      isEqual = simpleIsEqual;
+    }
 
-    var lastThis = void 0;
+    var lastThis;
     var lastArgs = [];
-    var lastResult = void 0;
+    var lastResult;
     var calledOnce = false;
 
     var isNewArgEqualToLast = function isNewArgEqualToLast(newArg, index) {
@@ -25,7 +27,7 @@
     };
 
     var result = function result() {
-      for (var _len = arguments.length, newArgs = Array(_len), _key = 0; _key < _len; _key++) {
+      for (var _len = arguments.length, newArgs = new Array(_len), _key = 0; _key < _len; _key++) {
         newArgs[_key] = arguments[_key];
       }
 
@@ -33,17 +35,17 @@
         return lastResult;
       }
 
+      lastResult = resultFn.apply(this, newArgs);
       calledOnce = true;
       lastThis = this;
       lastArgs = newArgs;
-      lastResult = resultFn.apply(this, newArgs);
       return lastResult;
     };
 
     return result;
   }
 
-  var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
+  var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
   function createCommonjsModule(fn, module) {
   	return module = { exports: {} }, fn(module, module.exports), module.exports;
@@ -3557,6 +3559,19 @@
               group = objectWithoutProperties(props, ['type']);
 
           var headingId = props.key + '-heading';
+
+          if (props.options && !props.options.length || !props.options.filter(function (_ref2) {
+            var type = _ref2.type,
+                options = _ref2.options;
+            return type === 'group' && options.length;
+          }).length && props.options.filter(function (_ref3) {
+            var type = _ref3.type;
+            return type === 'group';
+          }).length) {
+
+            return null;
+          }
+
           return React__default.createElement(
             Group,
             _extends({}, commonProps, group, {
@@ -3609,11 +3624,11 @@
             menuPosition: menuPosition,
             menuShouldScrollIntoView: menuShouldScrollIntoView
           }),
-          function (_ref2) {
-            var ref = _ref2.ref,
-                _ref2$placerProps = _ref2.placerProps,
-                placement = _ref2$placerProps.placement,
-                maxHeight = _ref2$placerProps.maxHeight;
+          function (_ref4) {
+            var ref = _ref4.ref,
+                _ref4$placerProps = _ref4.placerProps,
+                placement = _ref4$placerProps.placement,
+                maxHeight = _ref4$placerProps.maxHeight;
             return React__default.createElement(
               Menu$$1,
               _extends({}, commonProps, {
@@ -3980,18 +3995,18 @@
       return option && option.key;
     };
 
-    this.announceAriaLiveSelection = function (_ref3) {
-      var event = _ref3.event,
-          context = _ref3.context;
+    this.announceAriaLiveSelection = function (_ref5) {
+      var event = _ref5.event,
+          context = _ref5.context;
 
       _this7.setState({
         ariaLiveSelection: valueEventAriaMessage(event, context)
       });
     };
 
-    this.announceAriaLiveContext = function (_ref4) {
-      var event = _ref4.event,
-          context = _ref4.context;
+    this.announceAriaLiveContext = function (_ref6) {
+      var event = _ref6.event,
+          context = _ref6.context;
 
       _this7.setState({
         ariaLiveContext: instructionsAriaMessage(event, _extends({}, context, {
@@ -4090,18 +4105,18 @@
       });
     };
 
-    this.onTouchStart = function (_ref5) {
-      var _ref5$touches = slicedToArray(_ref5.touches, 1),
-          touch = _ref5$touches[0];
+    this.onTouchStart = function (_ref7) {
+      var _ref7$touches = slicedToArray(_ref7.touches, 1),
+          touch = _ref7$touches[0];
 
       _this7.initialTouchX = touch.clientX;
       _this7.initialTouchY = touch.clientY;
       _this7.userIsDragging = false;
     };
 
-    this.onTouchMove = function (_ref6) {
-      var _ref6$touches = slicedToArray(_ref6.touches, 1),
-          touch = _ref6$touches[0];
+    this.onTouchMove = function (_ref8) {
+      var _ref8$touches = slicedToArray(_ref8.touches, 1),
+          touch = _ref8$touches[0];
 
       var deltaX = Math.abs(touch.clientX - _this7.initialTouchX);
       var deltaY = Math.abs(touch.clientY - _this7.initialTouchY);

@@ -87,7 +87,7 @@
     "react-dom": "^15.3.0 || ^16.0.0"
   },
   "scripts": {
-    "build": "nps build && bundlesize",
+    "build": "nps build",
     "watch": "nps build.watch",
     "coveralls": "cat coverage/lcov.info | coveralls",
     "lint": "eslint .",

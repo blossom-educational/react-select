@@ -3399,6 +3399,19 @@ var Select = function (_Component) {
             group = objectWithoutProperties(props, ['type']);
 
         var headingId = props.key + '-heading';
+
+        if (props.options && !props.options.length || !props.options.filter(function (_ref2) {
+          var type = _ref2.type,
+              options = _ref2.options;
+          return type === 'group' && options.length;
+        }).length && props.options.filter(function (_ref3) {
+          var type = _ref3.type;
+          return type === 'group';
+        }).length) {
+
+          return null;
+        }
+
         return React.createElement(
           Group,
           _extends({}, commonProps, group, {
@@ -3451,11 +3464,11 @@ var Select = function (_Component) {
           menuPosition: menuPosition,
           menuShouldScrollIntoView: menuShouldScrollIntoView
         }),
-        function (_ref2) {
-          var ref = _ref2.ref,
-              _ref2$placerProps = _ref2.placerProps,
-              placement = _ref2$placerProps.placement,
-              maxHeight = _ref2$placerProps.maxHeight;
+        function (_ref4) {
+          var ref = _ref4.ref,
+              _ref4$placerProps = _ref4.placerProps,
+              placement = _ref4$placerProps.placement,
+              maxHeight = _ref4$placerProps.maxHeight;
           return React.createElement(
             Menu$$1,
             _extends({}, commonProps, {
@@ -3822,18 +3835,18 @@ var _initialiseProps = function _initialiseProps() {
     return option && option.key;
   };
 
-  this.announceAriaLiveSelection = function (_ref3) {
-    var event = _ref3.event,
-        context = _ref3.context;
+  this.announceAriaLiveSelection = function (_ref5) {
+    var event = _ref5.event,
+        context = _ref5.context;
 
     _this7.setState({
       ariaLiveSelection: valueEventAriaMessage(event, context)
     });
   };
 
-  this.announceAriaLiveContext = function (_ref4) {
-    var event = _ref4.event,
-        context = _ref4.context;
+  this.announceAriaLiveContext = function (_ref6) {
+    var event = _ref6.event,
+        context = _ref6.context;
 
     _this7.setState({
       ariaLiveContext: instructionsAriaMessage(event, _extends({}, context, {
@@ -3932,18 +3945,18 @@ var _initialiseProps = function _initialiseProps() {
     });
   };
 
-  this.onTouchStart = function (_ref5) {
-    var _ref5$touches = slicedToArray(_ref5.touches, 1),
-        touch = _ref5$touches[0];
+  this.onTouchStart = function (_ref7) {
+    var _ref7$touches = slicedToArray(_ref7.touches, 1),
+        touch = _ref7$touches[0];
 
     _this7.initialTouchX = touch.clientX;
     _this7.initialTouchY = touch.clientY;
     _this7.userIsDragging = false;
   };
 
-  this.onTouchMove = function (_ref6) {
-    var _ref6$touches = slicedToArray(_ref6.touches, 1),
-        touch = _ref6$touches[0];
+  this.onTouchMove = function (_ref8) {
+    var _ref8$touches = slicedToArray(_ref8.touches, 1),
+        touch = _ref8$touches[0];
 
     var deltaX = Math.abs(touch.clientX - _this7.initialTouchX);
     var deltaY = Math.abs(touch.clientY - _this7.initialTouchY);

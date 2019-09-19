@@ -1592,6 +1592,16 @@ export default class Select extends Component<Props, State> {
     const renderGroup = (props: GroupType) => {
       const { type, ...group } = props;
       const headingId = `${props.key}-heading`;
+
+      if ((props.options && !props.options.length)
+        || (
+          !props.options.filter(({ type, options }) => type === 'group' && options.length).length
+          && props.options.filter(({ type }) => type === 'group').length
+        )) {
+
+        return null;
+      }
+
       return (
         <Group
           {...commonProps}
